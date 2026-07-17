@@ -8,9 +8,15 @@ const {
     getContent,
     updateContent,
     deleteContent,
+    getPublicContent,
+    getPublicContentBySlug,
 } = require("../controllers/contentsController");
 
 const protect = require("../middlewares/authMiddleware");
+
+// Public routes (no auth) - must come before "/:id"
+router.get("/public", getPublicContent);
+router.get("/public/:slug", getPublicContentBySlug);
 
 router.post("/", protect, createContent);
 

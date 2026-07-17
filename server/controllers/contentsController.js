@@ -42,6 +42,55 @@ const getAllContent = async (req, res) => {
     }
 };
 
+// Get All Published Content (public, no auth) - for the public blog frontend
+const getPublicContent = async (req, res) => {
+    try {
+        const content = await Content.find({ status: "published", type: "post" })
+            .sort({ createdAt: -1 })
+            .populate("author", "name email");
+
+        res.json({
+            success: true,
+            data: content,
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message,
+        });
+    }
+};
+
+// Get Single Published Content by slug (public, no auth)
+const getPublicContentBySlug = async (req, res) => {
+    try {
+        const content = await Content.findOne({
+            slug: req.params.slug,
+            status: "published",
+        }).populate("author", "name email");
+
+        if (!content) {
+            return res.status(404).json({
+                success: false,
+                message: "Content not found",
+            });
+        }
+
+        res.json({
+            success: true,
+            data: content,
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: err.message,
+        });
+    }
+};
+
+
 // Get Single Content
 const getContent = async (req, res) => {
     try {
@@ -113,4 +162,6 @@ module.exports = {
     getContent,
     updateContent,
     deleteContent,
+    getPublicContent,
+    getPublicContentBySlug,
 };
