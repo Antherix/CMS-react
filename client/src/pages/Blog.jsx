@@ -44,10 +44,16 @@ function Blog() {
     return (
         <div className="blog">
             <header className="blog-header">
-                <Link to="/blog">
-                    <h1 className="blog-title">Journal</h1>
-                </Link>
-                <p className="blog-subtitle">Writing &amp; notes</p>
+                <div className="blog-header-row">
+                    <Link to="/blog" className="blog-header-brand">
+                        <h1 className="blog-title">Journal</h1>
+                        <p className="blog-subtitle">Writing &amp; notes</p>
+                    </Link>
+
+                    <Link to="/login" className="blog-login-link">
+                        Login
+                    </Link>
+                </div>
             </header>
 
             {loading && <p className="state-msg">Loading posts…</p>}

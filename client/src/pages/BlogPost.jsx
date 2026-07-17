@@ -40,9 +40,15 @@ function BlogPost() {
 
     return (
         <div className="blog">
-            <Link to="/blog" className="post-page-back">
-                ← All posts
-            </Link>
+            <div className="post-page-nav">
+                <Link to="/blog" className="post-page-back">
+                    ← All posts
+                </Link>
+
+                <Link to="/login" className="blog-login-link">
+                    Login
+                </Link>
+            </div>
 
             {loading && <p className="state-msg">Loading…</p>}
             {error && <p className="state-msg">{error}</p>}

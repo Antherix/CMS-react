@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../services/authServices";
+import "../styles/admin.css";
 
 function Login() {
 
@@ -11,6 +12,8 @@ function Login() {
         password: "",
     });
 
+    const [error, setError] = useState(null);
+
     const handleChange = (e) => {
         setForm({
             ...form,
@@ -20,6 +23,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
 
         try {
 
@@ -32,41 +36,57 @@ function Login() {
 
         } catch (err) {
 
-            alert(
-                err.response?.data?.message || "Login Failed"
-            );
+            setError(err.response?.data?.message || "Login failed. Check your credentials.");
 
         }
     };
 
     return (
-        <div style={{ padding: "50px" }}>
-            <h2>Admin Login</h2>
+        <div className="login-page">
 
-            <form onSubmit={handleSubmit}>
+            <h2 className="login-title">Admin Login</h2>
+            <p className="login-subtitle">Sign in to manage content.</p>
 
-                <input
-                    name="email"
-                    placeholder="Email"
-                    onChange={handleChange}
-                />
+            {error && <div className="login-error">{error}</div>}
 
-                <br /><br />
+            <form className="login-form" onSubmit={handleSubmit}>
 
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                />
+                <div className="field">
+                    <label htmlFor="email">Email</label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-                <br /><br />
+                <div className="field">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="••••••••"
+                        value={form.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
 
-                <button>
-                    Login
-                </button>
+                <button className="btn">Login</button>
 
             </form>
+
+            <br />
+
+            <Link className="link-btn" to="/blog">
+                ← Back to blog
+            </Link>
+
         </div>
     );
 }

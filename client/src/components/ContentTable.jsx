@@ -1,15 +1,16 @@
 function ContentTable({ contents, onEdit, onDelete }) {
 
     if (!contents.length) {
-        return <h3>No Content Found</h3>;
+        return <p className="empty-state">No content found. Add your first post above.</p>;
     }
 
     return (
-        <table border="1">
+        <table className="admin-table">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Slug</th>
+                    <th>Type</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -20,15 +21,22 @@ function ContentTable({ contents, onEdit, onDelete }) {
                     <tr key={item._id}>
                         <td>{item.title}</td>
                         <td>{item.slug}</td>
-                        <td>{item.status}</td>
+                        <td>{item.type}</td>
                         <td>
-                            <button onClick={() => onEdit(item)}>
-                                Edit
-                            </button>
+                            <span className={`pill ${item.status === "published" ? "pill-published" : ""}`}>
+                                {item.status}
+                            </span>
+                        </td>
+                        <td>
+                            <div className="table-actions">
+                                <button className="link-btn" onClick={() => onEdit(item)}>
+                                    Edit
+                                </button>
 
-                            <button onClick={() => onDelete(item._id)}>
-                                Delete
-                            </button>
+                                <button className="link-btn" onClick={() => onDelete(item._id)}>
+                                    Delete
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 ))}

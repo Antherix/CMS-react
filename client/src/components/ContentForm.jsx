@@ -1,14 +1,16 @@
 import { useState } from "react";
 
+const emptyForm = {
+    title: "",
+    slug: "",
+    body: "",
+    type: "post",
+    status: "draft",
+};
+
 function ContentForm({ onAdd }) {
 
-    const [form, setForm] = useState({
-        title: "",
-        slug: "",
-        body: "",
-        type: "page",
-        status: "draft",
-    });
+    const [form, setForm] = useState(emptyForm);
 
     const handleChange = (e) => {
         setForm({
@@ -20,50 +22,77 @@ function ContentForm({ onAdd }) {
     const submit = (e) => {
         e.preventDefault();
         onAdd(form);
-
-        setForm({
-            title: "",
-            slug: "",
-            body: "",
-            type: "page",
-            status: "draft",
-        });
+        setForm(emptyForm);
     };
 
     return (
-        <form onSubmit={submit}>
+        <form className="content-form" onSubmit={submit}>
 
-            <input
-                name="title"
-                placeholder="Title"
-                value={form.title}
-                onChange={handleChange}
-            />
+            <div className="field">
+                <label htmlFor="title">Title</label>
+                <input
+                    id="title"
+                    name="title"
+                    placeholder="Post title"
+                    value={form.title}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-            <input
-                name="slug"
-                placeholder="Slug"
-                value={form.slug}
-                onChange={handleChange}
-            />
+            <div className="field">
+                <label htmlFor="slug">Slug</label>
+                <input
+                    id="slug"
+                    name="slug"
+                    placeholder="post-title"
+                    value={form.slug}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-            <textarea
-                name="body"
-                placeholder="Body"
-                value={form.body}
-                onChange={handleChange}
-            />
+            <div className="field">
+                <label htmlFor="body">Body</label>
+                <textarea
+                    id="body"
+                    name="body"
+                    placeholder="Write here..."
+                    value={form.body}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
 
-            <select
-                name="status"
-                value={form.status}
-                onChange={handleChange}
-            >
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-            </select>
+            <div className="form-row">
+                <div className="field">
+                    <label htmlFor="type">Type</label>
+                    <select
+                        id="type"
+                        name="type"
+                        value={form.type}
+                        onChange={handleChange}
+                    >
+                        <option value="post">Post</option>
+                        <option value="page">Page</option>
+                    </select>
+                </div>
 
-            <button>Add Content</button>
+                <div className="field">
+                    <label htmlFor="status">Status</label>
+                    <select
+                        id="status"
+                        name="status"
+                        value={form.status}
+                        onChange={handleChange}
+                    >
+                        <option value="draft">Draft</option>
+                        <option value="published">Published</option>
+                    </select>
+                </div>
+            </div>
+
+            <button className="btn">Add Content</button>
 
         </form>
     );
