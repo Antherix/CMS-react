@@ -62,7 +62,7 @@ const getPublicContent = async (req, res) => {
     }
 };
 
-// Get Single Published Content by slug (public, no auth)
+// Get Single Published by Slug
 const getPublicContentBySlug = async (req, res) => {
     try {
         const content = await Content.findOne({

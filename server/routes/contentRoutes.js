@@ -14,7 +14,7 @@ const {
 
 const protect = require("../middlewares/authMiddleware");
 
-// Public routes (no auth) - must come before "/:id"
+// Public routes (no auth)
 router.get("/public", getPublicContent);
 router.get("/public/:slug", getPublicContentBySlug);
 
